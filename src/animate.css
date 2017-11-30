@@ -1,0 +1,7 @@
+svg {overflow: hidden;}
+svg .close_button {cursor: pointer;}
+svg .houses {cursor: pointer;}
+svg .text {display:none;}
+svg .hide {display: none;}
+svg .arrows {display: none;}
+svg .rect_info {cursor: help;}

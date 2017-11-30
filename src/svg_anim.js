@@ -1,10 +1,10 @@
-var polyplastic = {};
+var water = {};
 $(document).ready(function() {
 	var s = Snap('#drawing'),
 		s_width = s.node.width.baseVal.value;
 		s_height = s.node.height.baseVal.value,
 		overlay = $("#overlay_layer").hide();
-	polyplastic.anim_class = "in-animation";
+	water.anim_class = "in-animation";
 
 	/* ***
 	*** START - Hide all frames
@@ -40,8 +40,8 @@ $(document).ready(function() {
 			})
 			.click(function() {
 				/* *** if we have any timeout's, then clear their *** */
-				if(polyplastic.timeout) {
-					polyplastic.timeout.forEach(function(item) {
+				if(water.timeout) {
+					water.timeout.forEach(function(item) {
 						clearTimeout(item);
 					});
 				}
@@ -74,7 +74,7 @@ $(document).ready(function() {
 			})
 			.click(function() {
 				overlay.show();
-				polyplastic.timeout = [];
+				water.timeout = [];
 				animationFrameStart(this);
 				animationMainStop();
 				
@@ -229,8 +229,8 @@ $(document).ready(function() {
 
 				animFunc = "animation_"+frame_data;
 				// console.log(animFunc);
-				if (polyplastic[animFunc]) {
-					polyplastic[animFunc](frame_data);
+				if (water[animFunc]) {
+					water[animFunc](frame_data);
 				} else {
 					animatePipesStart(frame_data);
 				}
@@ -256,8 +256,8 @@ $(document).ready(function() {
 					$("#"+frameId).hide();
 					animFunc = "stop_"+frameId;
 					// console.log(animFunc);
-					if (polyplastic[animFunc]) {
-						polyplastic[animFunc](frameId);
+					if (water[animFunc]) {
+						water[animFunc](frameId);
 					}
 					overlay.hide();
 					// animatePipesStart("frame_main");
@@ -289,8 +289,8 @@ $(document).ready(function() {
 		}).stop().animate({"stroke-dashoffset": 100}, -1000, mina.linear);
 	}
 	function addCircles(obj, count) {
-		if (!polyplastic[obj+"_kroshka"]) {
-			polyplastic[obj+"_kroshka"] = true;
+		if (!water[obj+"_kroshka"]) {
+			water[obj+"_kroshka"] = true;
 			var wrapObj = s.select("#"+obj),
 				wrapObjBBox = wrapObj.getBBox(),
 				wrapObjGroup = s.g();
@@ -319,11 +319,11 @@ $(document).ready(function() {
 	  // return Math.floor(Math.random() * (max - min + 1)) + min;
 	  return Math.random() * (max - min + 1) + min;
 	}
-	polyplastic.animation_frame_1 = function(frameObj) {
+	water.animation_frame_1 = function(frameObj) {
 		/* flag describe animation status */
-		polyplastic.inAnimation = false;
+		water.inAnimation = false;
 
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#"+frameObj+"_text path").eq(0).show();
 			/* *** animation first pipe *** */
 			animationCurPipe($("#f1_pipes_1"), true, "#FFFFFF");
@@ -363,19 +363,19 @@ $(document).ready(function() {
 				})
 			};
 			line_move_3();
-			arrow_1.addClass(polyplastic.anim_class);
-			arrow_2.addClass(polyplastic.anim_class);
-			arrow_3.addClass(polyplastic.anim_class);
+			arrow_1.addClass(water.anim_class);
+			arrow_2.addClass(water.anim_class);
+			arrow_3.addClass(water.anim_class);
 		}, 50));
 
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			// animationCurPipe($("#"+frameObj+" .pipes:eq(1)"), true);
 			animationCurPipe($("#f1_pipes_2"), true);
 			$("#"+frameObj+"_text path").eq(0).hide();
 			$("#"+frameObj+"_text path").eq(1).show();
 		}, 3500));
 
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			// animationCurPipe($("#"+frameObj+" .pipes:eq(2)"), true);
 			animationCurPipe($("#f1_pipes_3"), true);
 			// animationCurPipe($("#"+frameObj+" .pipes:eq(3)"), true);
@@ -383,30 +383,30 @@ $(document).ready(function() {
 			$("#"+frameObj+"_text path").eq(1).hide();
 			$("#"+frameObj+"_text path").eq(2).show();
 			cur_text = s.select("#"+$("#"+frameObj+"_text path").eq(2).attr("id")).addClass(frameObj+"-current-show");
-			polyplastic.inAnimation = true;
+			water.inAnimation = true;
 		}, 7000));
 		$("#"+frameObj+" .rect_info").each(function(index) {
 			index = index + 1;
 			$(this)
 			.hover(function() {
 				/* if animation on frame 2 no finish, then not accept handler hover event */
-				if(polyplastic.inAnimation) {
+				if(water.inAnimation) {
 					$("#"+cur_text.node.id).hide();
 					$("#f1_text_desc_"+index).show();
 				}
 			}, function() {
 				/* if animation on frame 2 no finish, then not accept handler hover event */
-				if(polyplastic.inAnimation) {
+				if(water.inAnimation) {
 					$("#f1_text_desc_"+index).hide();
 				}
 			});
 		});
 	}
-	polyplastic.stop_frame_1 = function(frameObj) {
+	water.stop_frame_1 = function(frameObj) {
 		$("#"+frameObj+"_text path").each(function() {
 			$(this).hide();
 		});
-		$("#"+frameObj+" ."+polyplastic.anim_class).each(function() {
+		$("#"+frameObj+" ."+water.anim_class).each(function() {
 			s.select("#"+$(this).attr("id")).stop();
 		});
 		$("#"+frameObj+" .hide").each(function() {
@@ -414,14 +414,14 @@ $(document).ready(function() {
 		});
 		animatePipesStop(frameObj, true);
 	}
-	polyplastic.animation_frame_2 = function(frameObj) {
+	water.animation_frame_2 = function(frameObj) {
 		/* flag describe animation status */
-		polyplastic.inAnimation = false;
+		water.inAnimation = false;
 		$("#"+frameObj+"_text path").eq(0).show();
 		/* *** animation first pipe *** */
 		animationCurPipe($("#f2_pipes_1"), true);
 		/* *** animation propelers and push in timeout array *** */
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$(".propeler").each(function () {
 			var propelers = s.select("#"+$(this).attr("id")),
 				propelersBBox = propelers.getBBox();
@@ -430,10 +430,10 @@ $(document).ready(function() {
 				el.animate({"transform": "r180,"+bbox.cx+","+bbox.cy}, 600, mina.linear, propelers_animation.bind(null, el, bbox));
 			}
 			propelers_animation(propelers, propelersBBox);
-			propelers.addClass(polyplastic.anim_class);
+			propelers.addClass(water.anim_class);
 		})}, 1500));
 		/* *** animation first arrow and push in timeout array *** */
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#f2_text_1").show();
 			var arrow_1 = s.select("#f2_arrow_1");
 			$("#f2_arrow_1").show();
@@ -447,37 +447,37 @@ $(document).ready(function() {
 				})
 			};
 			line_move();
-			arrow_1.addClass(polyplastic.anim_class);
+			arrow_1.addClass(water.anim_class);
 		}, 2500));
 		/* *** animation second pipe and push in timeout array *** */
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			animationCurPipe($("#f2_pipes_2"), true);
 		}, 5000));
 		/* *** show second text and hide first text and push in timeout array *** */
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#"+frameObj+"_text path").eq(0).hide();
 			$("#"+frameObj+"_text path").eq(1).show();
 		}, 5500));
 		/* *** show osadok and text  and push in timeout array *** */
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#f2_osadok").show();
 			$("#f2_text_5").show();
 		}, 5800));
 		/* *** show arrow 2 and push in timeout array *** */
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#f2_arrow_2").show();
 		}, 6000));
 		/* *** animation third pipe and push in timeout array *** */
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			animationCurPipe($("#f2_pipes_3"), true);
 		}, 9000));
 		/* *** show third text and hide second text *** */
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#"+frameObj+"_text path").eq(1).hide();
 			$("#"+frameObj+"_text path").eq(2).show();
 		}, 9500));
 		/* *** animation fourth pipe and push in timeout array *** */
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			animationCurPipe($("#f2_pipes_4"), true);
 			var arrow_3 = s.select("#f2_arrow_3");
 			$("#f2_arrow_3").show();
@@ -491,43 +491,43 @@ $(document).ready(function() {
 				})
 			};
 			line_move(arrow_3);
-			arrow_3.addClass(polyplastic.anim_class);
+			arrow_3.addClass(water.anim_class);
 		}, 12500));
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#"+frameObj+"_text path").eq(2).hide();
 			$("#"+frameObj+"_text path").eq(3).show();
 		}, 12000));
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			animationCurPipe($("#f2_pipes_5"), true);
 		}, 15000));
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#"+frameObj+"_text path").eq(3).hide();
 			$("#"+frameObj+"_text path").eq(4).show();
 			cur_text = s.select("#"+$("#"+frameObj+"_text path").eq(4).attr("id")).addClass(frameObj+"-current-show");
-			polyplastic.inAnimation = true;
+			water.inAnimation = true;
 		}, 15500));
 		$("#"+frameObj+" .rect_info").each(function(index) {
 			index = index + 1;
 			$(this)
 			.hover(function() {
 				/* if animation on frame 2 no finish, then not accept handler hover event */
-				if(polyplastic.inAnimation) {
+				if(water.inAnimation) {
 					$("#"+cur_text.node.id).hide();
 					$("#f2_text_desc_"+index).show();
 				}
 			}, function() {
 				/* if animation on frame 2 no finish, then not accept handler hover event */
-				if(polyplastic.inAnimation) {
+				if(water.inAnimation) {
 					$("#f2_text_desc_"+index).hide();
 				}
 			});
 		});
 	}
-	polyplastic.stop_frame_2 = function(frameObj) {
+	water.stop_frame_2 = function(frameObj) {
 		$("#"+frameObj+"_text path").each(function() {
 			$(this).hide();
 		});
-		$("#"+frameObj+" ."+polyplastic.anim_class).each(function() {
+		$("#"+frameObj+" ."+water.anim_class).each(function() {
 			s.select("#"+$(this).attr("id")).stop();
 		});
 		$("#"+frameObj+" .hide").each(function() {
@@ -535,36 +535,36 @@ $(document).ready(function() {
 		});
 		animatePipesStop(frameObj, true);
 	}
-	// polyplastic.animation_frame_3 = function(frameId) {
+	// water.animation_frame_3 = function(frameId) {
 	// 	animatePipesStart(frameId);
 	// }
-	// polyplastic.animation_frame_4_5 = function(frameId) {
+	// water.animation_frame_4_5 = function(frameId) {
 	// 	animatePipesStart(frameId);
 	// }
-	// polyplastic.animation_frame_6 = function(frameId) {
+	// water.animation_frame_6 = function(frameId) {
 	// 	animatePipesStart(frameId);
 	// }
-	polyplastic.animation_frame_7 = function(frameObj) {
+	water.animation_frame_7 = function(frameObj) {
 		var frameTime = 0;
 		/* flag describe animation status */
-		polyplastic.inAnimation = false;
+		water.inAnimation = false;
 		$("#"+frameObj+"_text path").eq(0).show();
 		/* *** animation first pipe *** */
 		animationCurPipe($("#f7_pipe_1"), true);
 
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#"+frameObj+"_text path").eq(0).hide();
 			$("#"+frameObj+"_text path").eq(1).show();
 			animationCurPipe($("#f7_pipe_2"), true);
 		}, frameTime+=3000));
 
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#"+frameObj+"_text path").eq(1).hide();
 			$("#"+frameObj+"_text path").eq(2).show();
 			animationCurPipe($("#f7_pipe_3"), true);
 		}, frameTime+=5000));
 
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#"+frameObj+"_text path").eq(2).hide();
 			$("#"+frameObj+"_text path").eq(3).show();
 			$("#"+frameObj+" #f7_arrow_1").show();
@@ -573,17 +573,17 @@ $(document).ready(function() {
 			$("#"+frameObj+" #f7_truck_1").show();
 		}, frameTime+=5000));
 
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#"+frameObj+"_text path").eq(3).hide();
 			$("#"+frameObj+"_text path").eq(4).show();
 			animationCurPipe($("#f7_pipe_4"), true);
 		}, frameTime+=5000));
 
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#"+frameObj+" #f7_first_otstoinik_1_content").show();
 		}, frameTime+=300));
 
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#"+frameObj+"_text path").eq(4).hide();
 			$("#"+frameObj+"_text path").eq(5).show();
 			$("#"+frameObj+" #f7_arrow_3").show();
@@ -599,7 +599,7 @@ $(document).ready(function() {
 						"transform": "matrix(1 0 0 1 -3 0)"
 					}, 400, mina.linear, f7_line_move.bind(null, el))
 				});
-				el.addClass(polyplastic.anim_class);
+				el.addClass(water.anim_class);
 			};
 			f7_line_move(f7_arrow_3_1);
 			f7_line_move(f7_arrow_3_2);
@@ -610,16 +610,16 @@ $(document).ready(function() {
 			animationCurPipe($("#f7_pipe_5"), true);
 		}, frameTime+=5000));
 
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#"+frameObj+"_text path").eq(5).hide();
 			$("#"+frameObj+"_text path").eq(6).show();
 		}, frameTime+=5000));
 
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			addCircles("f7_aerotenki", 150);
 		}, frameTime+=300));
 
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			$("#"+frameObj+" #f7_first_otstoinik_2_content").show();
 			$("#"+frameObj+" #f7_text_6").show();
 			$("#"+frameObj+" #f7_arrow_4").show();
@@ -627,36 +627,36 @@ $(document).ready(function() {
 			animationCurPipe($("#f7_pipe_6"), true);
 		}, frameTime+=5000));
 
-		polyplastic.timeout.push(setTimeout(function() {
+		water.timeout.push(setTimeout(function() {
 			animationCurPipe($("#f7_pipe_7"), true);
 			animationCurPipe($("#f7_pipe_8"), true);
 			$("#"+frameObj+"_text path").eq(6).hide();
 			$("#"+frameObj+"_text path").eq(7).show();
 			cur_text = s.select("#"+$("#"+frameObj+"_text path").eq(7).attr("id")).addClass(frameObj+"-current-show");
-			polyplastic.inAnimation = true;
+			water.inAnimation = true;
 		}, frameTime+=5000));
 		$("#"+frameObj+" .rect_info").each(function(index) {
 			index = index + 1;
 			$(this)
 			.hover(function() {
 				/* if animation on frame 7 no finish, then not accept handler hover event */
-				if(polyplastic.inAnimation) {
+				if(water.inAnimation) {
 					$("#"+cur_text.node.id).hide();
 					$("#f7_text_desc_"+index).show();
 				}
 			}, function() {
 				/* if animation on frame 7 no finish, then not accept handler hover event */
-				if(polyplastic.inAnimation) {
+				if(water.inAnimation) {
 					$("#f7_text_desc_"+index).hide();
 				}
 			});
 		});
 	}
-	polyplastic.stop_frame_7 = function(frameObj) {
+	water.stop_frame_7 = function(frameObj) {
 		$("#"+frameObj+"_text path").each(function() {
 			$(this).hide();
 		});
-		$("#"+frameObj+" ."+polyplastic.anim_class).each(function() {
+		$("#"+frameObj+" ."+water.anim_class).each(function() {
 			s.select("#"+$(this).attr("id")).stop();
 		});
 		$("#"+frameObj+" .hide").each(function() {
